@@ -44,3 +44,6 @@ desktop.ini
 *.tsbuildinfo
 .eslintcache
 *.local
+
+# Playwright test output
+.playwright-mcp/
