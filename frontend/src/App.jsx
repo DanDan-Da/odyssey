@@ -7,6 +7,26 @@ import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url'
 maplibregl.setWorkerUrl(workerUrl)
 
 
+// Style object, a raster source (satellite tiles) drawn as one layer, shown on a globe.
+// {z}/{x}/{y} in the URL is the tile address: zoom level, column, row.
+// Esri puts them in z/y/x order, so {y} comes before {x}.
+const satelliteStyle = {
+  version: 8,
+  projection: { type: 'globe' },
+  sources: {
+    satellite: {
+      type: 'raster',
+      tiles: [
+        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      ],
+      tileSize: 256,
+      maxzoom: 19,
+      attribution: 'Tiles © Esri, Maxar, Earthstar Geographics',
+    },
+  },
+  layers: [{ id: 'satellite', type: 'raster', source: 'satellite' }],
+}
+
 //The Application
 function App() {
   const containerRef = useRef(null)
@@ -17,9 +37,9 @@ function App() {
     mapRef.current = new maplibregl.Map({
       //Container puts the map inside the HTML element referenced by containerRef.
       container: containerRef.current,
-      style: 'https://demotiles.maplibre.org/globe.json',
-      center: [22.27, 60.45], // [longitude, latitude]
-      zoom: 4, // Starting Zoom for Earth.
+      style: satelliteStyle,
+      center: [-30, 20], // [longitude, latitude] - Atlantic, away from Turku
+      zoom: 1.5, // Whole planet in view.
     })
 
     return () => {
@@ -30,12 +50,13 @@ function App() {
 
   const flyToTurku = () => {
     // Camera Movement
-    mapRef.current.flyTo({ center: [22.27, 60.45], zoom: 7 })
+    mapRef.current.flyTo({ center: [22.27, 60.45], zoom: 13, duration: 8000 }) // City level
   }
 
   return (
     <>
-      <div ref={containerRef} style={{ width: '100%', height: '100vh' }} />  // The earth!
+      {/* The earth! */}
+      <div ref={containerRef} style={{ width: '100%', height: '100vh' }} />
       <button
         onClick={flyToTurku}
         style={{ position: 'absolute', top: 10, left: 10 }}
