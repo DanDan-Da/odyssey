@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react'
 import * as maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
+import "./data/planets.js"
+
 // Vite
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url'
 // Web worker for map processing.
