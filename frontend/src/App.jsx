@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react'
 import * as maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
+import { planets } from './data/planets.js'
+
 // Vite
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url'
 // Web worker for map processing.
@@ -63,6 +65,11 @@ function App() {
       >
         Fly to Turku
       </button>
+      <ul style={{ position: 'absolute', top: 10, right: 10, margin: 0, padding: '8px 16px', background: 'rgba(255,255,255,0.85)', listStyle: 'none' }}>
+        {planets.map(planet => (
+          <li key={planet.id}>{planet.symbol} {planet.name}</li>
+        ))}
+      </ul>
     </>
   )
 }
