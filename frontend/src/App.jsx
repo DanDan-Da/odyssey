@@ -19,7 +19,7 @@ const satelliteStyle = {
     satellite: {
       type: 'raster',
       tiles: [
-        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}?token=${import.meta.env.VITE_ARCGIS_KEY}`,
       ],
       tileSize: 256,
       maxzoom: 19,
